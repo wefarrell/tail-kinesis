@@ -1,4 +1,6 @@
-iterator=`aws kinesis get-shard-iterator --shard-id shardId-000000000000 --shard-iterator-type TRIM_HORIZON --stream-name ddex_into_kinesis_datastream | jq -r '.ShardIterator'`
+SHARD_ID='shardId-000000000000'
+STREAM_NAME='your stream name'
+iterator=`aws kinesis get-shard-iterator --shard-id ${SHARD_ID} --shard-iterator-type TRIM_HORIZON --stream-name ${STREAM_NAME} | jq -r '.ShardIterator'`
 millis_behind=1
 while :
 do
@@ -11,3 +13,4 @@ do
     if [ $millis_behind == 0  ]; then
         sleep 2
     fi
+done
